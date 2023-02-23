@@ -1,14 +1,15 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Represents a skincare product that can be added to a skincare routine with a name, brand, type (category),
 // price (cents), and frequency of usage.
 public class SkinProduct {
 
-    public static final List<String> CATEGORIES = List.of("Cleanser", "Exfoliator", "Toner", "Serum", "Moisturizer",
-            "Eye Cream", "Spot Treatment", "Sunscreen", "Face Mask");
-    public static final List<String> USAGE = List.of("Daily", "Weekly");
+    public static final List<String> CATEGORIES = new ArrayList<>(List.of("Cleanser", "Exfoliator", "Toner", "Serum",
+            "Moisturizer", "Eye Cream", "Spot Treatment", "Sunscreen", "Face Mask"));
+    public static final List<String> USAGE = new ArrayList<>(List.of("Daily", "Weekly"));
 
     private String name;
     private String brand;
