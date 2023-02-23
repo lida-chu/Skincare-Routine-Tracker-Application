@@ -7,14 +7,13 @@ import java.util.List;
 public class SkinProduct {
 
     public static final List<String> CATEGORIES = List.of("Cleanser", "Exfoliator", "Toner", "Serum", "Moisturizer",
-            "Eye Cream", "Sunscreen", "Spot Treatment", "Face Mask");
+            "Eye Cream", "Spot Treatment", "Sunscreen", "Face Mask");
     public static final List<String> USAGE = List.of("Daily", "Weekly");
 
     private String name;
     private String brand;
     private String category;
     private String usageFrequency;
-    private String notes;
     private int price;
 
     // EFFECTS: Creates a new skin product with the given name and brand
@@ -22,6 +21,9 @@ public class SkinProduct {
         this.name = name;
         this.brand = brand;
     }
+
+    // EFFECTS: Creates a new skin product
+    public SkinProduct() {}
 
     // MODIFIES: this
     public void setName(String name) {
@@ -34,7 +36,7 @@ public class SkinProduct {
     }
 
     // MODIFIES: this
-    public void setBrand() {
+    public void setBrand(String brand) {
         this.brand = brand;
     }
 
@@ -62,16 +64,6 @@ public class SkinProduct {
     // EFFECTS: returns price (in cents) of skin product
     public int getPrice() {
         return this.price;
-    }
-
-    // MODIFIES: this
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    // EFFECTS: returns the notes on the skin product
-    public String getNotes() {
-        return this.notes;
     }
 
     // REQUIRES: Integer provided is [0, 1]
