@@ -28,6 +28,15 @@ public class RoutineTest {
     }
 
     @Test
+    public void getRoutineTest() {
+        testRoutine1.addToRoutine(testCleanser);
+        testRoutine2.addToRoutine(testSerum);
+
+        assertTrue(testRoutine1.getRoutine().contains(testCleanser));
+        assertTrue(testRoutine2.getRoutine().contains(testSerum));
+    }
+
+    @Test
     public void isInRoutineTest_True() {
         testRoutine1.addToRoutine(testCleanser);
         assertTrue(testRoutine1.isInRoutine(testCleanser));
@@ -44,9 +53,10 @@ public class RoutineTest {
     @Test
     public void isNameInRoutineTest_True() {
         testRoutine1.addToRoutine(testCleanser);
+        testRoutine1.addToRoutine(testSerum);
+
         assertTrue(testRoutine1.isInRoutine("Foaming Facial Cleanser"));
-        testRoutine2.addToRoutine(testSerum);
-        assertTrue(testRoutine2.isInRoutine("Tea Tree Relief Serum"));
+        assertTrue(testRoutine1.isInRoutine("Tea Tree Relief Serum"));
     }
 
     @Test
@@ -125,11 +135,26 @@ public class RoutineTest {
     }
 
     @Test
-    public void validRoutineTest_True() {
+    public void validRoutineTest_True_OneSerumOneFaceMask() {
         testRoutine1.addToRoutine(testCleanser);
         testRoutine1.addToRoutine(testExfoliator);
         testRoutine1.addToRoutine(testToner);
         testRoutine1.addToRoutine(testSerum);
+        testRoutine1.addToRoutine(testMoisturizer);
+        testRoutine1.addToRoutine(testEyeCream);
+        testRoutine1.addToRoutine(testSpot);
+        testRoutine1.addToRoutine(testSunscreen);
+        testRoutine1.addToRoutine(testFaceMask);
+
+        testRoutine1.setValidRoutine();
+        assertTrue(testRoutine1.getValidRoutine());
+    }
+
+    @Test
+    public void validRoutineTest_True_OneSerum() {
+        testRoutine1.addToRoutine(testCleanser);
+        testRoutine1.addToRoutine(testExfoliator);
+        testRoutine1.addToRoutine(testToner);
         testRoutine1.addToRoutine(testSerum);
         testRoutine1.addToRoutine(testMoisturizer);
         testRoutine1.addToRoutine(testEyeCream);
@@ -143,7 +168,24 @@ public class RoutineTest {
     }
 
     @Test
-    public void validRoutineTest_False_NotFull() {
+    public void validRoutineTest_True_OneFaceMask() {
+        testRoutine1.addToRoutine(testCleanser);
+        testRoutine1.addToRoutine(testExfoliator);
+        testRoutine1.addToRoutine(testToner);
+        testRoutine1.addToRoutine(testSerum);
+        testRoutine1.addToRoutine(testSerum);
+        testRoutine1.addToRoutine(testMoisturizer);
+        testRoutine1.addToRoutine(testEyeCream);
+        testRoutine1.addToRoutine(testSpot);
+        testRoutine1.addToRoutine(testSunscreen);
+        testRoutine1.addToRoutine(testFaceMask);
+
+        testRoutine1.setValidRoutine();
+        assertTrue(testRoutine1.getValidRoutine());
+    }
+
+    @Test
+    public void validRoutineTest_False_LessThanOne() {
         testRoutine2.addToRoutine(testExfoliator);
         testRoutine2.addToRoutine(testToner);
         testRoutine2.addToRoutine(testSerum);
@@ -154,6 +196,52 @@ public class RoutineTest {
         testRoutine2.addToRoutine(testSunscreen);
         testRoutine2.addToRoutine(testFaceMask);
         testRoutine2.addToRoutine(testFaceMask);
+
+        testRoutine2.setValidRoutine();
+        assertFalse(testRoutine2.getValidRoutine());
+    }
+
+    @Test
+    public void validRoutineTest_False_NoSerum() {
+        testRoutine1.addToRoutine(testCleanser);
+        testRoutine2.addToRoutine(testExfoliator);
+        testRoutine2.addToRoutine(testToner);
+        testRoutine2.addToRoutine(testMoisturizer);
+        testRoutine2.addToRoutine(testEyeCream);
+        testRoutine2.addToRoutine(testSpot);
+        testRoutine2.addToRoutine(testSunscreen);
+        testRoutine2.addToRoutine(testFaceMask);
+        testRoutine2.addToRoutine(testFaceMask);
+
+        testRoutine2.setValidRoutine();
+        assertFalse(testRoutine2.getValidRoutine());
+    }
+
+    @Test
+    public void validRoutineTest_False_NoFaceMask() {
+        testRoutine1.addToRoutine(testCleanser);
+        testRoutine2.addToRoutine(testExfoliator);
+        testRoutine2.addToRoutine(testToner);
+        testRoutine1.addToRoutine(testSerum);
+        testRoutine1.addToRoutine(testSerum);
+        testRoutine2.addToRoutine(testMoisturizer);
+        testRoutine2.addToRoutine(testEyeCream);
+        testRoutine2.addToRoutine(testSpot);
+        testRoutine2.addToRoutine(testSunscreen);
+
+        testRoutine2.setValidRoutine();
+        assertFalse(testRoutine2.getValidRoutine());
+    }
+
+    @Test
+    public void validRoutineTest_False_NoFaceMaskOrSerum() {
+        testRoutine1.addToRoutine(testCleanser);
+        testRoutine2.addToRoutine(testExfoliator);
+        testRoutine2.addToRoutine(testToner);
+        testRoutine2.addToRoutine(testMoisturizer);
+        testRoutine2.addToRoutine(testEyeCream);
+        testRoutine2.addToRoutine(testSpot);
+        testRoutine2.addToRoutine(testSunscreen);
 
         testRoutine2.setValidRoutine();
         assertFalse(testRoutine2.getValidRoutine());

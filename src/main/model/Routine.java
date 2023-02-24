@@ -65,11 +65,7 @@ public class Routine {
     // REQUIRES: budget is a non-negative integer
     // MODIFIES: this
     public void checkBudget(int budget) {
-        if (this.totalExpenses() > budget) {
-            outOfBudget = true;
-        } else {
-            outOfBudget = false;
-        }
+        outOfBudget = this.totalExpenses() > budget;
     }
 
     // EFFECTS: return true if routine is empty

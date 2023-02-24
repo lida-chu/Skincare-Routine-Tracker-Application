@@ -8,8 +8,6 @@ import java.util.List;
 // price (cents), and frequency of usage.
 public class SkinProduct {
 
-    /* public static final List<String> CATEGORIES = new ArrayList<>(List.of("Cleanser", "Exfoliator", "Toner", "Serum",
-            "Moisturizer", "Eye Cream", "Spot Treatment", "Sunscreen", "Face Mask"));*/
     public static final List<String> USAGE = new ArrayList<>(Arrays.asList("Daily", "Weekly"));
 
     public static final List<String> CATEGORIES = new ArrayList<>(Arrays.asList(
@@ -32,22 +30,18 @@ public class SkinProduct {
     // EFFECTS: Creates a new skin product
     public SkinProduct() {}
 
-    // MODIFIES: this
     public void setName(String name) {
         this.name = name;
     }
 
-    // EFFECTS: returns name of the skin product
     public String getName() {
         return this.name;
     }
 
-    // MODIFIES: this
     public void setBrand(String brand) {
         this.brand = brand;
     }
 
-    // EFFECTS: returns brand of the skin product
     public String getBrand() {
         return this.brand;
     }
@@ -58,17 +52,14 @@ public class SkinProduct {
         this.category = CATEGORIES.get(categoryNum);
     }
 
-    // EFFECTS: returns the category of the skin product
     public String getCategory() {
         return this.category;
     }
 
-    // MODIFIES: this
     public void setPrice(int price) {
         this.price = price;
     }
 
-    // EFFECTS: returns price (in cents) of skin product
     public int getPrice() {
         return this.price;
     }
@@ -79,7 +70,6 @@ public class SkinProduct {
         this.usageFrequency = USAGE.get(usageNum);
     }
 
-    // EFFECTS: returns usage frequency of the skin product
     public String getUsage() {
         return this.usageFrequency;
     }

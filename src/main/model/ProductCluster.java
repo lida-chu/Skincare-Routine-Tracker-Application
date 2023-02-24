@@ -9,7 +9,7 @@ public class ProductCluster {
 
     // EFFECT: Create new empty collection of skin products
     public ProductCluster() {
-        this.cluster = new LinkedList();
+        this.cluster = new LinkedList<>();
     }
 
     // EFFECTS: returns cluster

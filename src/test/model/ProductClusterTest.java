@@ -3,6 +3,9 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,6 +25,14 @@ public class ProductClusterTest {
         testCluster2.addToCluster(testToner);
     }
 
+    @Test
+    public void getClusterTest() {
+        testCluster1.addToCluster(testCleanser);
+        testCluster1.addToCluster(testExfoliator);
+
+        assertTrue(testCluster1.getCluster().contains(testCleanser));
+        assertTrue(testCluster1.getCluster().contains(testExfoliator));
+    }
     @Test
     public void isInClusterTest_True() {
         testCluster1.addToCluster(testCleanser);
