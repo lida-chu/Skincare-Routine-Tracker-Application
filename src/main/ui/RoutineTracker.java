@@ -18,7 +18,7 @@ public class RoutineTracker {
     }
 
     public void runTracker() {
-        Boolean keepRunning = true;
+        boolean keepRunning = true;
         String command;
 
         setUpRoutines();
@@ -72,7 +72,6 @@ public class RoutineTracker {
             case "5":
                 viewTotalExpenses();
                 break;
-
         }
     }
 
@@ -80,10 +79,11 @@ public class RoutineTracker {
         if (currentRoutine.isBlank()) {
             System.out.println("No products were added to the current skincare routine.\n");
         } else {
-            for (SkinProduct sp: this.currentRoutine.getRoutine()) {
-                System.out.println("Product: " + sp.getName());
-                System.out.println("Brand: " + sp.getBrand());
-                System.out.println("Type: " + sp.getCategory() + "\n");
+            for (int i = 0; i < currentRoutine.getRoutine().size(); i++) {
+                SkinProduct sp = currentRoutine.getRoutine().get(i);
+                int spot = i + 1;
+                System.out.println(spot + "." + sp.getCategory());
+                System.out.println("Name: " + sp.getName() + " | Brand: " + sp.getBrand() + "\n");
             }
         }
     }
@@ -169,4 +169,12 @@ public class RoutineTracker {
         System.out.println("The total cost of the current routine is " + currentRoutine.totalExpenses() + "¢ \n");
     }
 
+    private Boolean alreadyExistsInRoutine(String productName) {
+        for (SkinProduct sp: currentRoutine.getRoutine()) {
+            if (sp.getName().equals(productName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
