@@ -59,6 +59,8 @@ public class RoutineTracker {
         allProducts = new ProductCluster();
         avoidProducts = new ProductCluster();
         futureProducts = new ProductCluster();
+
+        input.useDelimiter("\n");
     }
 
     // EFFECTS: Processes command inputted by user
@@ -150,9 +152,9 @@ public class RoutineTracker {
                     currentRoutine.removeFromRoutine(sp);
                 }
             }
-            System.out.println("The product, '" + productName + "' was successfully removed from the routine.");
+            System.out.println("The product, '" + productName + "' was successfully removed from the routine. \n");
         } else {
-            System.out.println("The product, '" + productName + "' does not exist in your current skincare routine.");
+            System.out.println("The product, '" + productName + "' does not exist in your current skincare routine.\n");
         }
     }
 
@@ -169,11 +171,11 @@ public class RoutineTracker {
                     System.out.println("Brand: " + sp.getBrand());
                     System.out.println("Type: " + sp.getCategory());
                     System.out.println("Price: " + sp.getPrice() + "¢");
-                    System.out.println("Usage: " + sp.getUsage());
+                    System.out.println("Usage: " + sp.getUsage() + "\n");
                 }
             }
         } else {
-            System.out.println("The product, '" + productName + "' does not exist in your current skincare routine.");
+            System.out.println("The product, '" + productName + "' does not exist in your current skincare routine.\n");
         }
 
     }
@@ -181,7 +183,7 @@ public class RoutineTracker {
     // EFFECTS: Prints total cost of all products in the current skincare routine
     public void viewTotalExpenses() {
         System.out.println("TOTAL EXPENSES OF CURRENT SKINCARE ROUTINE");
-        System.out.println("The total cost of the current routine is " + currentRoutine.totalExpenses() + "¢ \n");
+        System.out.println("The total cost of the current routine is " + currentRoutine.totalExpenses() + "¢. \n");
     }
 
 }
