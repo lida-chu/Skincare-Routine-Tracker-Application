@@ -29,12 +29,12 @@ public class ProductCluster {
     }
 
     // EFFECTS: returns true if product is in routine
-    public Boolean isInCluster(SkinProduct product) {
+    public boolean isInCluster(SkinProduct product) {
         return this.cluster.contains(product);
     }
 
     // EFFECTS: returns true if product with given name is in routine
-    public Boolean isInCluster(String productName) {
+    public boolean isInCluster(String productName) {
         for (SkinProduct sp: cluster) {
             if (sp.getName().equals(productName)) {
                 return true;

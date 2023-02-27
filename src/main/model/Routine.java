@@ -3,14 +3,14 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
-// Represents a skincare routine
+// Represents a skincare routine; a specific list of skincare products
 public class Routine {
 
     private List<SkinProduct> routine;
     private boolean outOfBudget;
     private boolean validRoutine;
 
-    // EFFECTS: Create new blank skincare routine with all statuses set to false
+    // EFFECTS: Create new blank skincare routine with all outOfBudget and validRoutine set to false
     public Routine() {
         this.routine = new LinkedList<>();
         this.outOfBudget = false;
@@ -18,12 +18,12 @@ public class Routine {
     }
 
     // EFFECTS: returns true if product is in routine
-    public Boolean isInRoutine(SkinProduct product) {
+    public boolean isInRoutine(SkinProduct product) {
         return this.routine.contains(product);
     }
 
     // EFFECTS: returns true if product with given name is in routine
-    public Boolean isInRoutine(String productName) {
+    public boolean isInRoutine(String productName) {
         for (SkinProduct sp: routine) {
             if (sp.getName().equals(productName)) {
                 return true;
@@ -73,7 +73,6 @@ public class Routine {
         return this.routine.isEmpty();
     }
 
-    // MODIFIES: this
     public void setValidRoutine() {
         this.validRoutine = isValid();
     }
@@ -82,8 +81,8 @@ public class Routine {
         return this.validRoutine;
     }
 
-    //EFFECTS: returns true if the routine has at least one serum and face mask, and one product per every other
-    //         category
+    //EFFECTS: returns true if the routine has at least one serum and face mask, and only one product per every other
+    //         category; returns false otherwise
     public boolean isValid() {
         for (int i = 0; i < SkinProduct.CATEGORIES.size(); i++) {
             String currentCat = SkinProduct.CATEGORIES.get(i);
@@ -100,9 +99,8 @@ public class Routine {
         return true;
     }
 
-    // REQUIRES: catIndex is a number between 0 inclusive and SkinProduct.CATEGORIES.size() exclusive, and category is
-    //           a string in SkinProduct.CATEGORIES
-    // EFFECTS: returns number of products in current skincare routine
+    // REQUIRES: category is a string in SkinProduct.CATEGORIES
+    // EFFECTS: returns number of products of the given category in the current skincare routine
     public int numInCategory(String category) {
         int count = 0;
         for (SkinProduct sp: routine) {

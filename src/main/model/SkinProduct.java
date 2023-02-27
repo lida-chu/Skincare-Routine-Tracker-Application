@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// Represents a skincare product that can be added to a skincare routine with a name, brand, type (category),
-// price (cents), and frequency of usage.
+// Represents a skincare product with a name, brand, type (category), price (cents), and frequency of usage.
 public class SkinProduct {
 
     public static final List<String> USAGE = new ArrayList<>(Arrays.asList("Daily", "Weekly"));

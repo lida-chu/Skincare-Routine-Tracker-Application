@@ -6,6 +6,8 @@ import model.SkinProduct;
 
 import java.util.Scanner;
 
+// Represents the Skincare Routine Tracker Application
+
 public class RoutineTracker {
     Scanner input = new Scanner(System.in);
     Routine currentRoutine;
@@ -13,10 +15,13 @@ public class RoutineTracker {
     ProductCluster avoidProducts;
     ProductCluster futureProducts;
 
+    // EFFECTS: creates a new RoutineTracker
     public RoutineTracker() {
         runTracker();
     }
 
+    // MODIFIES: this
+    // EFFECTS: takes in user input
     public void runTracker() {
         boolean keepRunning = true;
         String command;
@@ -26,7 +31,7 @@ public class RoutineTracker {
         System.out.println("Welcome to your Skincare Routine Tracker!\n");
 
         while (keepRunning) {
-            displayMenu();
+            displayOptions();
             command = input.next();
 
             if (command.equals("x")) {
@@ -37,17 +42,18 @@ public class RoutineTracker {
         }
     }
 
-    public void displayMenu() {
+    // EFFECTS: Prints out next options
+    public void displayOptions() {
         System.out.println("Please choose from the following options:");
         System.out.println("1 | View current skincare routine");
         System.out.println("2 | Add a product to your current skincare routine");
         System.out.println("3 | Remove a product from your current skincare routine");
         System.out.println("4 | Search for a product in your routine");
         System.out.println("5 | View total expenses");
-        //System.out.println("6 | View suggestions!");
         System.out.println("x | Exit Skincare Routine Tracker\n");
     }
 
+    // MODIFIES: this
     public void setUpRoutines() {
         currentRoutine = new Routine();
         allProducts = new ProductCluster();
@@ -55,6 +61,7 @@ public class RoutineTracker {
         futureProducts = new ProductCluster();
     }
 
+    // EFFECTS: Processes command inputted by user
     public void chooseCommand(String choice) {
         switch (choice) {
             case "1":
@@ -75,6 +82,7 @@ public class RoutineTracker {
         }
     }
 
+    // EFFECTS: Displays all products in current skincare routine
     public void viewRoutine() {
         if (currentRoutine.isBlank()) {
             System.out.println("No products were added to the current skincare routine.\n");
@@ -88,6 +96,8 @@ public class RoutineTracker {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates and adds a product to the current skincare routine based on user input
     public void addProduct() {
         SkinProduct toAddProduct = new SkinProduct();
         currentRoutine.addToRoutine(toAddProduct);
@@ -113,6 +123,7 @@ public class RoutineTracker {
         System.out.println("You have successfully added the product. :)\n");
     }
 
+    // EFFECTS: Prints out all skincare product categories
     public void displayCategories() {
         System.out.println("0 | Cleanser");
         System.out.println("1 | Exfoliator");
@@ -125,6 +136,8 @@ public class RoutineTracker {
         System.out.println("8 | Face Mask");
     }
 
+    // MODIFIES: this
+    // EFFECTS: Removes a product from the current skincare routine based on user input
     public void removeProduct() {
         System.out.println("REMOVING A PRODUCT FROM THE CURRENT SKINCARE ROUTINE");
         System.out.println("What is the name of the product you want to remove?");
@@ -143,6 +156,7 @@ public class RoutineTracker {
         }
     }
 
+    // EFFECTS: Displays a specific product's information based on user input
     public void viewProduct() {
         System.out.println("What is the name of the product you are searching for?");
 
@@ -164,17 +178,10 @@ public class RoutineTracker {
 
     }
 
+    // EFFECTS: Prints total cost of all products in the current skincare routine
     public void viewTotalExpenses() {
         System.out.println("TOTAL EXPENSES OF CURRENT SKINCARE ROUTINE");
         System.out.println("The total cost of the current routine is " + currentRoutine.totalExpenses() + "¢ \n");
     }
 
-    private Boolean alreadyExistsInRoutine(String productName) {
-        for (SkinProduct sp: currentRoutine.getRoutine()) {
-            if (sp.getName().equals(productName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
