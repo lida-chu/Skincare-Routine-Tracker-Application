@@ -39,11 +39,16 @@ easier and fun for **everyone**.
 > - As a user, I want to be able to remove a product from my skincare routine.
 > - As a user, I want to be able to select a product from my skincare routine and view its information.
 > - As a user, I want to be able to see the total expense of products in my current skincare routine.
+> - As a user, I want to have the option of saving my current skincare routine to a file.
+> - As a user, I want to have the option of loading a saved skincare routine from file into the application.
 > 
 > Stretch Goals: *(Not implemented yet)*
 > - As a user, I want to be able to see the most expensive and least expensive products in my current skincare routine.
 > - As a user, I want to be able to add a product to a list of products that I may want to try in the future.
 > - As a user, I want to be able to add a product to a list of products that I want to avoid using.
-
+> - As a user, I want to also be able to save the lists of products I want to avoid/use in the future with my current 
+> skincare routine.
+> - As a user, I want to also be able to load the lists of products I want to avoid/use in the future from the file with
+> my current skincare routine into the application.
 
 
