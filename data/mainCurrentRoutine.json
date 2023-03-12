@@ -1,0 +1,19 @@
+{
+    "Products": [
+        {
+            "Brand": "Brand A",
+            "Category": "Cleanser",
+            "Usage Frequency": "Daily",
+            "Price": 1000,
+            "Name": "Name A"
+        },
+        {
+            "Brand": "Brand B",
+            "Category": "Exfoliator",
+            "Usage Frequency": "Weekly",
+            "Price": 20000,
+            "Name": "Name B"
+        }
+    ],
+    "Name": "Current Routine"
+}

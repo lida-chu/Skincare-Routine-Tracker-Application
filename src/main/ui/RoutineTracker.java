@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class RoutineTracker {
     Scanner input = new Scanner(System.in);
-    private static final String STORE_AT_FILE_PATH = "./data/myFile.json";
+    private static final String STORE_AT_FILE_PATH = "./data/mainCurrentRoutine.json";
     private JsonReader reader;
     private JsonWriter writer;
 
