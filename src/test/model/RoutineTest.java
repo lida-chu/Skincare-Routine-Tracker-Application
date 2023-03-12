@@ -19,6 +19,7 @@ public class RoutineTest {
 
     Routine testRoutine1;
     Routine testRoutine2;
+    Routine testRoutine3;
 
     @BeforeEach
     public void setUp() {
@@ -27,6 +28,11 @@ public class RoutineTest {
         setCategories();
     }
 
+    @Test
+    public void constructWithNameTest() {
+        testRoutine3 = new Routine("X's Skincare Routine");
+        assertEquals("X's Skincare Routine", testRoutine3.getName());
+    }
     @Test
     public void getRoutineTest() {
         testRoutine1.addToRoutine(testCleanser);

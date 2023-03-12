@@ -1,11 +1,14 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 // Represents a skincare product with a name, brand, type (category), price (cents), and frequency of usage.
-public class SkinProduct {
+public class SkinProduct implements Writable {
 
     public static final List<String> USAGE = new ArrayList<>(Arrays.asList("Daily", "Weekly"));
 
@@ -51,6 +54,12 @@ public class SkinProduct {
         this.category = CATEGORIES.get(categoryNum);
     }
 
+    // REQUIRES: String provided must be included in CATEGORIES
+    // MODIFIES: this
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getCategory() {
         return this.category;
     }
@@ -69,7 +78,27 @@ public class SkinProduct {
         this.usageFrequency = USAGE.get(usageNum);
     }
 
+    // REQUIRES: String provided must be included in USAGE
+    // MODIFIES: this
+    public void setUsage(String usage) {
+        this.usageFrequency = usage;
+    }
+
     public String getUsage() {
         return this.usageFrequency;
+    }
+
+    // EFFECTS: Returns the json representation of a skin product
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("Name", name);
+        json.put("Brand", brand);
+        json.put("Category", category);
+        json.put("Usage Frequency", usageFrequency);
+        json.put("Price", price);
+
+        return json;
     }
 }

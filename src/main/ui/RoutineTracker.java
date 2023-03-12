@@ -3,17 +3,26 @@ package ui;
 import model.ProductCluster;
 import model.Routine;
 import model.SkinProduct;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Represents the Skincare Routine Tracker Application
 
 public class RoutineTracker {
     Scanner input = new Scanner(System.in);
-    Routine currentRoutine;
-    ProductCluster allProducts;
-    ProductCluster avoidProducts;
-    ProductCluster futureProducts;
+    private static final String STORE_AT_FILE_PATH = "./data/myFile.json";
+    private JsonReader reader;
+    private JsonWriter writer;
+
+    private static final String FILE_NAME = "Current Routine";
+    private Routine currentRoutine;
+    private ProductCluster allProducts;
+    private ProductCluster avoidProducts;
+    private ProductCluster futureProducts;
 
     // EFFECTS: creates a new RoutineTracker
     public RoutineTracker() {
@@ -50,17 +59,22 @@ public class RoutineTracker {
         System.out.println("3 | Remove a product from your current skincare routine");
         System.out.println("4 | Search for a product in your routine");
         System.out.println("5 | View total expenses");
+        System.out.println("6 | Save current skincare routine");
+        System.out.println("7 | Load previous skincare routine");
         System.out.println("x | Exit Skincare Routine Tracker\n");
     }
 
     // MODIFIES: this
     public void setUpRoutines() {
-        currentRoutine = new Routine();
+        currentRoutine = new Routine(FILE_NAME);
         allProducts = new ProductCluster();
         avoidProducts = new ProductCluster();
         futureProducts = new ProductCluster();
 
         input.useDelimiter("\n");
+
+        reader = new JsonReader(STORE_AT_FILE_PATH);
+        writer = new JsonWriter(STORE_AT_FILE_PATH);
     }
 
     // EFFECTS: Processes command inputted by user
@@ -80,6 +94,12 @@ public class RoutineTracker {
                 break;
             case "5":
                 viewTotalExpenses();
+                break;
+            case "6":
+                saveToFile();
+                break;
+            case "7":
+                loadFromFile();
                 break;
         }
     }
@@ -184,6 +204,30 @@ public class RoutineTracker {
     public void viewTotalExpenses() {
         System.out.println("TOTAL EXPENSES OF CURRENT SKINCARE ROUTINE");
         System.out.println("The total cost of the current routine is " + currentRoutine.totalExpenses() + "¢. \n");
+    }
+
+    // EFFECTS: saves current skincare routine to file
+    public void saveToFile() {
+        try {
+            writer.openWriter();
+            writer.write(currentRoutine);
+            writer.closeWriter();
+
+            System.out.println("Saved current skincare routine!");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found. Skincare routine could not be saved.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads saved skincare routine from file
+    public void loadFromFile() {
+        try {
+            currentRoutine = reader.read();
+            System.out.println("Successfully loaded previous skincare routine!");
+        } catch (IOException e) {
+            System.out.println("Previous skincare routine could not be loaded.");
+        }
     }
 
 }

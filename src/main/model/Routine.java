@@ -1,20 +1,37 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.LinkedList;
 import java.util.List;
 
 // Represents a skincare routine; a specific list of skincare products
-public class Routine {
+public class Routine implements Writable {
 
+    private String name;
     private List<SkinProduct> routine;
     private boolean outOfBudget;
     private boolean validRoutine;
 
-    // EFFECTS: Create new blank skincare routine with all outOfBudget and validRoutine set to false
+    // EFFECTS: Create new blank skincare routine with outOfBudget and validRoutine set to false
     public Routine() {
         this.routine = new LinkedList<>();
         this.outOfBudget = false;
         this.validRoutine = false;
+    }
+
+    // EFFECTS: Create new blank skincare routine with given name and outOfBudget and validRoutine set to false
+    public Routine(String title) {
+        this.name = title;
+        this.routine = new LinkedList<>();
+        this.outOfBudget = false;
+        this.validRoutine = false;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     // EFFECTS: returns true if product is in routine
@@ -84,14 +101,17 @@ public class Routine {
     //EFFECTS: returns true if the routine has at least one serum and face mask, and only one product per every other
     //         category; returns false otherwise
     public boolean isValid() {
-        for (int i = 0; i < SkinProduct.CATEGORIES.size(); i++) {
-            String currentCat = SkinProduct.CATEGORIES.get(i);
-            if ((currentCat.equals("Serum")) || (currentCat.equals("Face Mask"))) {
-                if (numInCategory(currentCat) < 1) {
-                    return false;
-                }
-            } else {
-                if ((numInCategory(currentCat) > 1) || (numInCategory(currentCat) < 1)) {
+        int numSerum = numInCategory("Serum");
+        int numMask = numInCategory("Face Mask");
+
+        if ((numSerum < 1) || (numMask < 1)) {
+            return false;
+        } else {
+            for (int i = 0; i < SkinProduct.CATEGORIES.size(); i++) {
+                String currentCat = SkinProduct.CATEGORIES.get(i);
+                Boolean otherCategory = (!(currentCat.equals("Serum"))) && (!(currentCat.equals("Face Mask")));
+
+                if (otherCategory && !(numInCategory(currentCat) == 1)) {
                     return false;
                 }
             }
@@ -109,6 +129,26 @@ public class Routine {
             }
         }
         return count;
+    }
+
+    // EFFECTS: returns a Json representation of a skin routine
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Name", "Current Routine");
+        json.put("Products", productsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns the skin products in the routine as a Json array
+    private JSONArray productsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (SkinProduct sp : routine) {
+            jsonArray.put(sp.toJson());
+        }
+
+        return jsonArray;
     }
 
 
