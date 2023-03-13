@@ -135,7 +135,7 @@ public class Routine implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("Name", "Current Routine");
+        json.put("Name", name);
         json.put("Products", productsToJson());
         return json;
     }

@@ -15,8 +15,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 // Represents an object that reads from Json file
 
-// References:
-//
+// Reference for code displayed in README
 
 public class JsonReader {
 

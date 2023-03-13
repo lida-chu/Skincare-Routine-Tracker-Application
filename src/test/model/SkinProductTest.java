@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -59,12 +60,24 @@ class SkinProductTest {
     }
 
     @Test
-    public void setUsage() {
+    public void setUsageTest() {
         testCleanser.setUsage(0);
         assertEquals("Daily", testCleanser.getUsage());
         testFaceMask.setUsage(1);
         assertEquals("Weekly", testFaceMask.getUsage());
     }
 
+    @Test
+    public void productToJsonTest() {
+        testToner.setCategory("Toner");
+        testToner.setUsage("Daily");
+        testToner.setPrice(1000);
+        JSONObject jsonTestToner = testToner.toJson();
 
+        assertEquals("Advanced Snail 96 Mucin Power Essence", jsonTestToner.getString("Name"));
+        assertEquals("Corsyx", jsonTestToner.getString("Brand"));
+        assertEquals("Toner", jsonTestToner.getString("Category"));
+        assertEquals("Daily", jsonTestToner.getString("Usage Frequency"));
+        assertEquals(1000, jsonTestToner.getInt("Price"));
+    }
 }

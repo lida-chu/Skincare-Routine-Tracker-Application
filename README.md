@@ -50,5 +50,10 @@ easier and fun for **everyone**.
 > skincare routine.
 > - As a user, I want to also be able to load the lists of products I want to avoid/use in the future from the file with
 > my current skincare routine into the application.
+> 
+> ## References ##
+> Code used for data persistence (i.e. the persistence package and toJson methods in model package) was primarily 
+> designed after the [JsonSerializationDemo](https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
+> repository.
 
 

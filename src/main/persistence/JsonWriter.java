@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-// Represents an object that writes to JSON
+// Represents an object that writes to JSON file
+
+// Reference for code displayed in README
 public class JsonWriter {
 
     private static final int TAB = 4;

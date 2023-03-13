@@ -35,7 +35,7 @@ public class JsonWriterTest {
 
             JsonReader testReader = new JsonReader("./data/testWriterEmptyRoutine.json");
             Routine readSr = testReader.read();
-            assertEquals("Current Routine", readSr.getName());
+            assertEquals("Test Routine", readSr.getName());
             assertTrue(readSr.getRoutine().isEmpty());
 
         } catch (FileNotFoundException e) {
@@ -59,7 +59,7 @@ public class JsonWriterTest {
 
             JsonReader testReader = new JsonReader("./data/testWriterNotEmptyRoutine.json");
             Routine readSr = testReader.read();
-            assertEquals("Current Routine", readSr.getName());
+            assertEquals("Test Routine", readSr.getName());
 
             List<SkinProduct> sps = readSr.getRoutine();
             assertEquals(3, sps.size());

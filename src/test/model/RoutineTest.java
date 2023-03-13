@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +25,7 @@ public class RoutineTest {
 
     @BeforeEach
     public void setUp() {
-        testRoutine1 = new Routine();
+        testRoutine1 = new Routine("Test Routine");
         testRoutine2 = new Routine();
         setCategories();
     }
@@ -284,5 +286,35 @@ public class RoutineTest {
         testFaceMask.setCategory(8);
     }
 
+    @Test
+    public void RoutineToJsonTest() {
+        testCleanser.setUsage("Daily");
+        testCleanser.setPrice(1250);
+        testExfoliator.setUsage("Daily");
+        testExfoliator.setPrice(2000);
+        testFaceMask.setUsage("Weekly");
+        testFaceMask.setPrice(1500);
+
+        testRoutine1.addToRoutine(testCleanser);
+        testRoutine1.addToRoutine(testExfoliator);
+        testRoutine1.addToRoutine(testFaceMask);
+        JSONObject jsonTestRoutine = testRoutine1.toJson();
+        JSONArray jsonTestRoutineProducts = jsonTestRoutine.getJSONArray("Products");
+
+        assertEquals("Test Routine", jsonTestRoutine.getString("Name"));
+        assertTrue(verifyProducts(jsonTestRoutineProducts.getJSONObject(0), testCleanser));
+        assertTrue(verifyProducts(jsonTestRoutineProducts.getJSONObject(1), testExfoliator));
+        assertTrue(verifyProducts(jsonTestRoutineProducts.getJSONObject(2), testFaceMask));
+    }
+
+    private boolean verifyProducts(JSONObject jsonSp, SkinProduct sp) {
+        boolean sameName = sp.getName().equals(jsonSp.getString("Name"));
+        boolean sameCategory = sp.getCategory().equals(jsonSp.getString("Category"));
+        boolean sameUsage = sp.getUsage().equals(jsonSp.getString("Usage Frequency"));
+        boolean sameBrand = sp.getBrand().equals(jsonSp.getString("Brand"));
+        boolean samePrice = (sp.getPrice() == jsonSp.getInt("Price"));
+
+        return sameName && sameCategory && sameUsage && sameBrand && samePrice;
+    }
 
 }
