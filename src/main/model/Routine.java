@@ -104,7 +104,7 @@ public class Routine implements Writable {
         int numSerum = numInCategory("Serum");
         int numMask = numInCategory("Face Mask");
 
-        if ((numSerum < 1) || (numMask < 1)) {
+        if ((numSerum == 0) || (numMask == 0)) {
             return false;
         } else {
             for (int i = 0; i < SkinProduct.CATEGORIES.size(); i++) {
