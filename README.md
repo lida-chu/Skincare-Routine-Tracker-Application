@@ -50,8 +50,18 @@ easier and fun for **everyone**.
 > skincare routine.
 > - As a user, I want to also be able to load the lists of products I want to avoid/use in the future from the file with
 > my current skincare routine into the application.
+>
+
+### Instructions for Grader
+
+- You can generate the first required action related to adding Xs to a Y by...
+- You can generate the second required action related to adding Xs to a Y by...
+- You can locate my visual component by...
+- You can save the state of my application by...
+- You can reload the state of my application by...
+
 > 
-> ## References ##
+> ### References ##
 > Code used for data persistence (i.e. the persistence package and toJson methods in model package) was primarily 
 > designed after the [JsonSerializationDemo](https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
 > repository.
