@@ -52,7 +52,7 @@ easier and fun for **everyone**.
 > my current skincare routine into the application.
 >
 
-### Instructions for Grader
+### Instructions for Grader (GUI)
 
 - You can generate the first required action related to adding Xs to a Y by...
 - You can generate the second required action related to adding Xs to a Y by...
