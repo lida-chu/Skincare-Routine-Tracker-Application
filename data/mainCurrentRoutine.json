@@ -1,18 +1,25 @@
 {
     "Products": [
         {
-            "Brand": "Brand A",
+            "Brand": "Khiel's",
             "Category": "Cleanser",
             "Usage Frequency": "Daily",
-            "Price": 1000,
-            "Name": "Name A"
+            "Price": 2000,
+            "Name": "Green Tea Face Wash"
         },
         {
-            "Brand": "Brand B",
+            "Brand": "Alilah",
+            "Category": "Face Mask",
+            "Usage Frequency": "Weekly",
+            "Price": 2500,
+            "Name": "Pano Face Mask"
+        },
+        {
+            "Brand": "Please Work",
             "Category": "Exfoliator",
             "Usage Frequency": "Weekly",
-            "Price": 1200,
-            "Name": "Name B"
+            "Price": 1500,
+            "Name": "Heck If I know"
         }
     ],
     "Name": "Current Routine"

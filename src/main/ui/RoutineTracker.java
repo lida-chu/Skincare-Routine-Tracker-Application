@@ -5,14 +5,22 @@ import model.Routine;
 import model.SkinProduct;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.graphics.AddProductForm;
+import ui.graphics.AppPanel;
+import ui.graphics.MainScreen;
+import ui.graphics.RoutineDisplay;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 // Represents the Skincare Routine Tracker Application
 
-public class RoutineTracker {
+public class RoutineTracker extends JFrame implements ActionListener {
     Scanner input = new Scanner(System.in);
     private static final String STORE_AT_FILE_PATH = "./data/mainCurrentRoutine.json";
     private JsonReader reader;
@@ -21,12 +29,95 @@ public class RoutineTracker {
     private static final String FILE_NAME = "Current Routine";
     private Routine currentRoutine;
     private ProductCluster allProducts;
-    private ProductCluster avoidProducts;
-    private ProductCluster futureProducts;
 
-    // EFFECTS: creates a new RoutineTracker
+    private static final int APP_LENGTH = 700;
+    private static final int APP_WIDTH = 700;
+    private static final int MENU_BTN_X = APP_WIDTH / 4;
+    private static final int MENU_BTN_Y = APP_LENGTH / 4;
+
+    ArrayList<JPanel> allPanels;
+
+    private AddProductForm addProductForm;
+    private MainScreen mainScreen;
+    private RoutineDisplay routineDisplay;
+
+    // EFFECTS: creates a new RoutineTracker and sets up all panels and buttons so that only the
+    //          main screen is visible when created
     public RoutineTracker() {
-        runTracker();
+
+        setUpRoutines();
+
+        this.setTitle("Skincare Routine Tracker");
+        this.setSize(APP_WIDTH, APP_LENGTH);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setUpPanels();
+        allPanels = new ArrayList<>();
+        addPanelsToList();
+
+        this.add(mainScreen);
+        this.pack();
+        this.setVisible(true);
+        //runTracker();
+    }
+
+    // MODIFIES: allPanels
+    private void addPanelsToList() {
+        allPanels.add(mainScreen);
+        allPanels.add(addProductForm);
+        allPanels.add(routineDisplay);
+    }
+
+    // MODIFIES: mainScreen
+    private void setMainButtonActions() {
+        for (JButton b: mainScreen.getAllButtons()) {
+            b.addActionListener(this);
+        }
+    }
+
+    // MODIFIES: addProductForm
+    private void setAddProductFormButtonActions() {
+        addProductForm.getSubmitBtn().addActionListener(this);
+        addProductForm.getHomeBtn().addActionListener(this);
+    }
+
+    // MODIFIES: addProductForm
+    private void setFormRadioButtonActions() {
+        for (JRadioButton rb: addProductForm.getAllRadioButtons()) {
+            rb.addActionListener(this);
+        }
+    }
+
+    // MODIFIES: routineDisplay
+    private void setRoutineDisplayButtonActions() {
+        for (JButton b: routineDisplay.getAllButtons()) {
+            b.addActionListener(this);
+        }
+    }
+
+    // EFFECTS: creates all other panels (Add, View, Search)
+    public void setUpPanels() {
+        mainScreen = new MainScreen(APP_WIDTH, APP_LENGTH, MENU_BTN_X, MENU_BTN_Y);
+        setMainButtonActions();
+
+        addProductForm = new AddProductForm(APP_WIDTH, APP_LENGTH);
+        setAddProductFormButtonActions();
+        setFormRadioButtonActions();
+
+        routineDisplay = new RoutineDisplay(APP_WIDTH, APP_LENGTH);
+        setRoutineDisplayButtonActions();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds addPanel to this and removes all the other panels
+    public void addSelectPanelToFrame(JPanel addPanel) {
+        for (JPanel jp: allPanels) {
+            if (jp != addPanel) {
+                this.remove(jp);
+            } else {
+                this.add(jp);
+            }
+        }
     }
 
     // MODIFIES: this
@@ -68,8 +159,6 @@ public class RoutineTracker {
     public void setUpRoutines() {
         currentRoutine = new Routine(FILE_NAME);
         allProducts = new ProductCluster();
-        avoidProducts = new ProductCluster();
-        futureProducts = new ProductCluster();
 
         input.useDelimiter("\n");
 
@@ -228,6 +317,156 @@ public class RoutineTracker {
         } catch (IOException e) {
             System.out.println("Previous skincare routine could not be loaded.");
         }
+    }
+
+    // EFFECTS: processes button command and executes the command
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (mainScreen.getAllButtons().contains(e.getSource())) {
+            mainScreenAction(e);
+        } else if (e.getSource() == addProductForm.getSubmitBtn()) {
+            addProductFormActionBtn();
+        } else if (e.getSource() == addProductForm.getHomeBtn()) {
+            this.remove(addProductForm);
+            this.add(mainScreen);
+        } else if (e.getSource() == routineDisplay.getHomeBtn()) {
+            this.remove(routineDisplay);
+            this.add(mainScreen);
+        }
+        // if source in x panel's list of buttons,
+        // go to helper method (that calls other commands)
+    }
+
+    private void addProductFormActionBtn() {
+        if (hasEmptyField()) {
+            String msg = "Please fill all fields.";
+            JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+        } else if (alreadyExistsInRoutine()) {
+            String msg = "A product with this name already exists in your skincare routine.";
+            JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            addProductToRoutine();
+        }
+    }
+
+    private void addProductToRoutine() {
+        SkinProduct toAddProduct = new SkinProduct();
+        currentRoutine.addToRoutine(toAddProduct);
+        allProducts.addToCluster(toAddProduct);
+
+        toAddProduct.setName(addProductForm.getNameBox().getText());
+        toAddProduct.setBrand(addProductForm.getBrandBox().getText());
+        toAddProduct.setPrice(Integer.parseInt(addProductForm.getPriceBox().getText()));
+        toAddProduct.setCategory(getSelectedCategory());
+        toAddProduct.setUsage(getSelectedUsage());
+
+        String msg = "You have successfully added the product.";
+        JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+    }
+
+    private int getSelectedUsage() {
+        if (addProductForm.getDailyBtn().isSelected()) {
+            return 0;
+        } else if (addProductForm.getWeeklyBtn().isSelected()) {
+            return 1;
+        }
+        return -1;
+    }
+
+    private String getSelectedCategory() {
+        if (addProductForm.getCleanserBtn().isSelected()) {
+            return "Cleanser";
+        } else if (addProductForm.getTonerBtn().isSelected()) {
+            return "Toner";
+        } else if (addProductForm.getExfoliatorBtn().isSelected()) {
+            return "Exfoliator";
+        } else if (addProductForm.getSerumBtn().isSelected()) {
+            return "Serum";
+        } else if (addProductForm.getMoisturizerBtn().isSelected()) {
+            return "Moisturizer";
+        } else if (addProductForm.getEyeCreamBtn().isSelected()) {
+            return "Eye Cream";
+        } else if (addProductForm.getSpotBtn().isSelected()) {
+            return "Spot Treatment";
+        } else if (addProductForm.getSunscreenBtn().isSelected()) {
+            return "Sunscreen";
+        } else if (addProductForm.getFaceMaskBtn().isSelected()) {
+            return "Face Mask";
+        }
+        return null;
+    }
+
+    // EFFECTS: returns true if product name in name text field is already in the routine
+    private boolean alreadyExistsInRoutine() {
+        String name = addProductForm.getNameBox().getText();
+        return currentRoutine.isInRoutine(name);
+    }
+
+    private boolean hasEmptyField() {
+        boolean noName = addProductForm.getNameBox().getText().isEmpty();
+        boolean noBrand = addProductForm.getBrandBox().getText().isEmpty();
+        boolean noPrice = addProductForm.getPriceBox().getText().isEmpty();
+        return noName || noBrand || noPrice || noCategory() || noUsage();
+    }
+
+    private boolean noUsage() {
+        return !(addProductForm.getDailyBtn().isSelected())
+                && !(addProductForm.getWeeklyBtn().isSelected());
+    }
+
+    private boolean noCategory() {
+        return !(addProductForm.getCleanserBtn().isSelected())
+                && !(addProductForm.getTonerBtn().isSelected())
+                && !(addProductForm.getExfoliatorBtn().isSelected())
+                && !(addProductForm.getSerumBtn().isSelected())
+                && !(addProductForm.getMoisturizerBtn().isSelected())
+                && !(addProductForm.getEyeCreamBtn().isSelected())
+                && !(addProductForm.getSpotBtn().isSelected())
+                && !(addProductForm.getSunscreenBtn().isSelected())
+                && !(addProductForm.getFaceMaskBtn().isSelected());
+    }
+
+    private void mainScreenAction(ActionEvent e) {
+        if (e.getSource() == mainScreen.getAddBtn()) {
+            this.remove(mainScreen);
+            this.add(addProductForm);
+        } else if (e.getSource() == mainScreen.getViewBtn()) {
+            this.remove(mainScreen);
+            updateRoutineDisplay();
+            this.add(routineDisplay);
+        } else if (e.getSource() == mainScreen.getSaveBtn()) {
+            saveToFile();
+            String msg = "You have successfully saved your current skincare routine.";
+            JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+        } else if (e.getSource() == mainScreen.getLoadBtn()) {
+            loadFromFile();
+            String msg = "You have successfully loaded your previous skincare routine.";
+            JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+    private void updateRoutineDisplay() {
+        if (currentRoutine.isBlank()) {
+            routineDisplay.emptyRoutineToDisplay(null);
+        } else {
+            routineDisplay.addRoutineToDisplay(makeJListRoutine());
+        }
+    }
+
+    public JList makeJListRoutine() {
+        DefaultListModel<String> myList = new DefaultListModel<>();
+
+        if (currentRoutine.isBlank()) {
+            myList.addElement("No products were added to the current skincare routine.\n");
+        } else {
+            for (int i = 0; i < currentRoutine.getRoutine().size(); i++) {
+                SkinProduct sp = currentRoutine.getRoutine().get(i);
+                int spot = i + 1;
+                String info =  sp.getCategory() + "| Name: " + sp.getName() + " | Brand: " + sp.getBrand();
+                myList.addElement(spot + "." + info);
+            }
+        }
+        return new JList<>(myList);
     }
 
 }
