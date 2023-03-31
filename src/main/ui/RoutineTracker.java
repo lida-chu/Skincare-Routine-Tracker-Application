@@ -482,9 +482,9 @@ public class RoutineTracker extends JFrame implements ActionListener {
     }
 
     private void updateRoutineDisplay() {
+
         if (currentRoutine.isBlank()) {
-            routineDisplay.addRoutineToDisplay(makeJListRoutine());
-            //routineDisplay.emptyRoutineToDisplay(null);
+            routineDisplay.emptyRoutineToDisplay(makeJListRoutine());
         } else {
             routineDisplay.addRoutineToDisplay(makeJListRoutine());
         }

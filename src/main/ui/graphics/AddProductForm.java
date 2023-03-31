@@ -58,6 +58,8 @@ public class AddProductForm extends AppPanel {
     private static final Font TEXT_FIELD_FONT = new Font("Consolas", Font.PLAIN, 35);
 
 
+    // MODIFIES: this, titleArea, homeBtnArea, formArea
+    // EFFECTS: makes a new AddProductForm with all the form components and sections set up
     public AddProductForm(int width, int height) {
         this.height = height;
         this.width = width;
@@ -74,16 +76,22 @@ public class AddProductForm extends AppPanel {
         addAreasToMainPanel();
     }
 
+    // MODIFIES: titleArea, titleLbl
+    // EFFECTS: sets up the title area of the form
     private void makeTitleArea() {
         titleLbl = new JLabel("Adding a Skin Product to Routine");
         titleArea.add(titleLbl);
     }
 
+    // MODIFIES: homeBtnArea, homeBtn
+    // EFFECTS: sets up the home button area of the form
     private void makeHomeArea() {
         homeBtn = new JButton("Return to Main Menu");
         homeBtnArea.add(homeBtn);
     }
 
+    // MODIFIES: titleArea, homeBtnArea, formArea
+    // EFFECTS: creates a new title area, home button area, and form area for the form panel
     private void setUpAreas() {
         titleArea = new JPanel();
         homeBtnArea = new JPanel();
@@ -94,6 +102,8 @@ public class AddProductForm extends AppPanel {
         formArea.setPreferredSize(new Dimension(width, 6 * height / 8));
     }
 
+    // MODIFIES: formArea
+    // EFFECTS: sets up all the buttons, labels, and text boxes for the form area
     private void makeForm() {
         formArea.setLayout(new GridLayout(6, 2));
         makeFormButtons();
@@ -108,6 +118,8 @@ public class AddProductForm extends AppPanel {
         addRadioButtonsToList();
     }
 
+    // MODIFIES: categoryPanel, usagePanel
+    // EFFECTS: makes a new category panel and usage panel
     private void makeButtonPanels() {
         categoryPanel = new JPanel();
         usagePanel = new JPanel();
@@ -116,6 +128,8 @@ public class AddProductForm extends AppPanel {
         usagePanel.setLayout(new GridLayout(1, 2));
     }
 
+    // MODIFIES: nameLbl, brandLbl, priceLbl, categoryLbl, usageLbl
+    // EFFECTS: sets up all the labels for the form
     private void makeFormLabels() {
         nameLbl = new JLabel("Name:");
         brandLbl = new JLabel("Brand:");
@@ -124,6 +138,9 @@ public class AddProductForm extends AppPanel {
         usageLbl = new JLabel("Usage Frequency:");
     }
 
+    // MODIFIES: cleanserBtn, tonerBtn, exfoliatorBtn, serumbtn, moisturizerBtn, eyeCreamBtn, spotBtn
+    //           sunscreenBtn, faceMaskBtn, dailyBtn, weeklyByn, submitBtn
+    // EFFECTS: makes all the buttons for the form
     private void makeFormButtons() {
         cleanserBtn = new JRadioButton("Cleanser");
         tonerBtn = new JRadioButton("Toner");
@@ -143,6 +160,8 @@ public class AddProductForm extends AppPanel {
         addButtonsToGroup();
     }
 
+    // MODIFIES: categoryGroup
+    // EFFECTS: adds all the category buttons to a group
     private void addButtonsToGroup() {
         categoryGroup = new ButtonGroup();
         categoryGroup.add(cleanserBtn);
@@ -160,6 +179,7 @@ public class AddProductForm extends AppPanel {
         usageGroup.add(weeklyBtn);
     }
 
+    // MODIFIES: nameBox, brandBox, priceBox
     private void makeTextBoxes() {
         nameBox = new JTextField();
         brandBox = new JTextField();
@@ -168,6 +188,7 @@ public class AddProductForm extends AppPanel {
         setTextBoxVisuals();
     }
 
+    // MODIFIES: nameBox, brandBox, priceBox
     private void setTextBoxVisuals() {
         nameBox.setFont(TEXT_FIELD_FONT);
         nameBox.setForeground(TEXT_COLOR);
@@ -182,6 +203,7 @@ public class AddProductForm extends AppPanel {
         priceBox.setBackground(TEXT_FIELD_COLOR);
     }
 
+    // MODIFIES: formArea
     private void addFormComponents() {
         formArea.add(nameLbl);
         formArea.add(nameBox);
@@ -204,6 +226,7 @@ public class AddProductForm extends AppPanel {
         formArea.add(submitBtn);
     }
 
+    // MODIFIES: categoryPanel, usagePanel
     private void addButtonsToPanels() {
         categoryPanel.add(cleanserBtn);
         categoryPanel.add(tonerBtn);
@@ -219,17 +242,20 @@ public class AddProductForm extends AppPanel {
         usagePanel.add(weeklyBtn);
     }
 
+    // MODIFIES: this
     private void addAreasToMainPanel() {
         this.add(titleArea, BorderLayout.NORTH);
         this.add(homeBtnArea, BorderLayout.SOUTH);
         this.add(formArea, BorderLayout.CENTER);
     }
 
+    // MODIFIES: formButtons
     private void addButtonsToList() {
         formButtons.add(homeBtn);
         formButtons.add(submitBtn);
     }
 
+    // MODIFIES: formRadioButtons
     private void addRadioButtonsToList() {
         formRadioButtons.add(cleanserBtn);
         formRadioButtons.add(tonerBtn);

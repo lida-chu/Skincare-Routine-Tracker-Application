@@ -1,26 +1,4 @@
 {
-    "Products": [
-        {
-            "Brand": "Khiel's",
-            "Category": "Cleanser",
-            "Usage Frequency": "Daily",
-            "Price": 2000,
-            "Name": "Green Tea Face Wash"
-        },
-        {
-            "Brand": "Alilah",
-            "Category": "Face Mask",
-            "Usage Frequency": "Weekly",
-            "Price": 2500,
-            "Name": "Pano Face Mask"
-        },
-        {
-            "Brand": "Please Work",
-            "Category": "Exfoliator",
-            "Usage Frequency": "Weekly",
-            "Price": 1500,
-            "Name": "Heck If I know"
-        }
-    ],
+    "Products": [],
     "Name": "Current Routine"
 }
