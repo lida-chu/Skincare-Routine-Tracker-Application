@@ -5,10 +5,7 @@ import model.Routine;
 import model.SkinProduct;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.graphics.AddProductForm;
-import ui.graphics.AppPanel;
-import ui.graphics.MainScreen;
-import ui.graphics.RoutineDisplay;
+import ui.graphics.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -40,6 +37,7 @@ public class RoutineTracker extends JFrame implements ActionListener {
     private AddProductForm addProductForm;
     private MainScreen mainScreen;
     private RoutineDisplay routineDisplay;
+    private RemoveProductForm removeProductForm;
 
     // EFFECTS: creates a new RoutineTracker and sets up all panels and buttons so that only the
     //          main screen is visible when created
@@ -95,6 +93,12 @@ public class RoutineTracker extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: removeProductForm
+    private void setRemoveProductFormButtonActions() {
+        removeProductForm.getSubmitBtn().addActionListener(this);
+        removeProductForm.getHomeBtn().addActionListener(this);
+    }
+
     // EFFECTS: creates all other panels (Add, View, Search)
     public void setUpPanels() {
         mainScreen = new MainScreen(APP_WIDTH, APP_LENGTH, MENU_BTN_X, MENU_BTN_Y);
@@ -106,6 +110,9 @@ public class RoutineTracker extends JFrame implements ActionListener {
 
         routineDisplay = new RoutineDisplay(APP_WIDTH, APP_LENGTH);
         setRoutineDisplayButtonActions();
+
+        removeProductForm = new RemoveProductForm(APP_WIDTH, APP_LENGTH);
+        setRemoveProductFormButtonActions();
     }
 
     // MODIFIES: this
@@ -332,9 +339,35 @@ public class RoutineTracker extends JFrame implements ActionListener {
         } else if (e.getSource() == routineDisplay.getHomeBtn()) {
             this.remove(routineDisplay);
             this.add(mainScreen);
+        } else if (e.getSource() == removeProductForm.getHomeBtn()) {
+            this.remove(removeProductForm);
+            this.add(mainScreen);
+        } else if (e.getSource() == removeProductForm.getSubmitBtn()) {
+            removeProductFormActionBtn();
         }
         // if source in x panel's list of buttons,
         // go to helper method (that calls other commands)
+    }
+
+    private void removeProductFormActionBtn() {
+        String productName = removeProductForm.getNameBox().getText();
+        boolean noName = removeProductForm.getNameBox().getText().isEmpty();
+        String msg;
+        if (noName) {
+            msg = "No name was filled in.";
+            JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+        } else if (currentRoutine.isInRoutine(productName)) {
+            for (SkinProduct sp: currentRoutine.getRoutine()) {
+                if (sp.getName().equals(productName)) {
+                    currentRoutine.removeFromRoutine(sp);
+                }
+            }
+            msg = "The product, " + productName + "was successfully removed.";
+            JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            msg = "This product does not exist in your routine.";
+            JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
     private void addProductFormActionBtn() {
@@ -442,12 +475,16 @@ public class RoutineTracker extends JFrame implements ActionListener {
             loadFromFile();
             String msg = "You have successfully loaded your previous skincare routine.";
             JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
+        } else if (e.getSource() == mainScreen.getRemoveBtn()) {
+            this.remove(mainScreen);
+            this.add(removeProductForm);
         }
     }
 
     private void updateRoutineDisplay() {
         if (currentRoutine.isBlank()) {
-            routineDisplay.emptyRoutineToDisplay(null);
+            routineDisplay.addRoutineToDisplay(makeJListRoutine());
+            //routineDisplay.emptyRoutineToDisplay(null);
         } else {
             routineDisplay.addRoutineToDisplay(makeJListRoutine());
         }

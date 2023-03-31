@@ -64,9 +64,7 @@ public class RoutineDisplay extends AppPanel {
     // MODIFIES: displayPanel
     // EFFECTS: removes the routine list and adds the empty label
     public void emptyRoutineToDisplay(JList routineJList) {
-        if (routineJList != null) {
-            displayPanel.remove(routineJList);
-        }
+        displayPanel.remove(routineJList);
         displayPanel.add(emptyLbl);
     }
 
