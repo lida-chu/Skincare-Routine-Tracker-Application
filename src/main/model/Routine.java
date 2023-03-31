@@ -101,19 +101,14 @@ public class Routine implements Writable {
     //EFFECTS: returns true if the routine has at least one serum and face mask, and only one product per every other
     //         category; returns false otherwise
     public boolean isValid() {
-        int numSerum = numInCategory("Serum");
-        int numMask = numInCategory("Face Mask");
+        for (int i = 0; i < SkinProduct.CATEGORIES.size(); i++) {
+            String currentCat = SkinProduct.CATEGORIES.get(i);
+            Boolean otherCategory = (!(currentCat.equals("Serum"))) && (!(currentCat.equals("Face Mask")));
 
-        if ((numSerum == 0) || (numMask == 0)) {
-            return false;
-        } else {
-            for (int i = 0; i < SkinProduct.CATEGORIES.size(); i++) {
-                String currentCat = SkinProduct.CATEGORIES.get(i);
-                Boolean otherCategory = (!(currentCat.equals("Serum"))) && (!(currentCat.equals("Face Mask")));
-
-                if (otherCategory && !(numInCategory(currentCat) == 1)) {
-                    return false;
-                }
+            if ((numInCategory(currentCat) < 1)) {
+                return false;
+            } else if (otherCategory && (numInCategory(currentCat) > 1)) {
+                return false;
             }
         }
         return true;
