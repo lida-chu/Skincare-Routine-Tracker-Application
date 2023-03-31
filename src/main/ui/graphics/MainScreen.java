@@ -19,6 +19,9 @@ public class MainScreen extends AppPanel {
     private JButton loadBtn;
     private JButton saveBtn;
 
+    private ImageIcon soapBottle;
+    private JLabel welcomeLbl;
+
     private int buttonWidth;
     private int buttonHeight;
 
@@ -40,12 +43,29 @@ public class MainScreen extends AppPanel {
         addButtonsToList();
         addButtonsToControlPanel();
 
+        setUpWelcomeScreenComponents();
+        addWelcomeScreenComponents();
+
         this.setLayout(new BorderLayout());
         this.add(welcomeScreen, BorderLayout.NORTH);
         this.add(controlPanel, BorderLayout.SOUTH);
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setVisible(true);
+    }
+
+    private void addWelcomeScreenComponents() {
+        welcomeScreen.add(welcomeLbl);
+    }
+
+    private void setUpWelcomeScreenComponents() {
+        soapBottle = new ImageIcon(this.getClass().getResource("/icons/bottle_icon.png"));
+        Image image = soapBottle.getImage();
+        Image newImg = image.getScaledInstance(120,120, java.awt.Image.SCALE_SMOOTH);
+        soapBottle = new ImageIcon(newImg);
+
+        welcomeLbl = new JLabel("Welcome to your Skincare Routine Tracker");
+        welcomeLbl.setIcon(soapBottle);
     }
 
     private void addButtonsToList() {
