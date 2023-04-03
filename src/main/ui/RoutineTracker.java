@@ -42,7 +42,6 @@ public class RoutineTracker extends JFrame implements ActionListener {
     // EFFECTS: creates a new RoutineTracker and sets up all panels and buttons so that only the
     //          main screen is visible when created
     public RoutineTracker() {
-
         setUpRoutines();
 
         this.setTitle("Skincare Routine Tracker");
@@ -230,13 +229,13 @@ public class RoutineTracker extends JFrame implements ActionListener {
 
         System.out.println("Please enter the number corresponding to the product category:");
         displayCategories();
-        toAddProduct.setCategory(Integer.parseInt(input.next())); // Note: add try-catch
+        toAddProduct.setCategory(Integer.parseInt(input.next()));
 
         System.out.println("Please enter the product usage frequency ('0' for daily, '1' for weekly):");
-        toAddProduct.setUsage(Integer.parseInt(input.next())); // Note: add try-catch
+        toAddProduct.setUsage(Integer.parseInt(input.next()));
 
         System.out.println("Please enter the price of the product (in cents):");
-        toAddProduct.setPrice(Integer.parseInt(input.next())); // Note: add try-catch
+        toAddProduct.setPrice(Integer.parseInt(input.next()));
 
         System.out.println("You have successfully added the product. :)\n");
     }
@@ -345,14 +344,16 @@ public class RoutineTracker extends JFrame implements ActionListener {
         } else if (e.getSource() == removeProductForm.getSubmitBtn()) {
             removeProductFormActionBtn();
         }
-        // if source in x panel's list of buttons,
-        // go to helper method (that calls other commands)
     }
 
+    // MODIFIES: currentRoutine
+    // EFFECTS: removes the product with the entered name from the current skincare routine, if such a product exists;
+    //          otherwise, alerts user that the product does not exist
     private void removeProductFormActionBtn() {
         String productName = removeProductForm.getNameBox().getText();
         boolean noName = removeProductForm.getNameBox().getText().isEmpty();
         String msg;
+
         if (noName) {
             msg = "No name was filled in.";
             JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
@@ -370,6 +371,7 @@ public class RoutineTracker extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: Alerts user if the add product form was not filled properly, otherwise allows product to be added
     private void addProductFormActionBtn() {
         if (hasEmptyField()) {
             String msg = "Please fill all fields.";
@@ -382,6 +384,9 @@ public class RoutineTracker extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: currentRoutine, allProducts
+    // EFFECTS: creates a new skin product with information entered on the form and adds it to the current
+    //          skincare routine
     private void addProductToRoutine() {
         SkinProduct toAddProduct = new SkinProduct();
         currentRoutine.addToRoutine(toAddProduct);
@@ -397,6 +402,7 @@ public class RoutineTracker extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
     }
 
+    // EFFECTS: returns index of USAGE selected; returns -1 if none were selected
     private int getSelectedUsage() {
         if (addProductForm.getDailyBtn().isSelected()) {
             return 0;
@@ -406,6 +412,7 @@ public class RoutineTracker extends JFrame implements ActionListener {
         return -1;
     }
 
+    // EFFECTS: returns name of category that was selected; returns null if nothing was selected
     private String getSelectedCategory() {
         if (addProductForm.getCleanserBtn().isSelected()) {
             return "Cleanser";
@@ -435,6 +442,7 @@ public class RoutineTracker extends JFrame implements ActionListener {
         return currentRoutine.isInRoutine(name);
     }
 
+    // EFFECTS: returns true if a text field was not filled in
     private boolean hasEmptyField() {
         boolean noName = addProductForm.getNameBox().getText().isEmpty();
         boolean noBrand = addProductForm.getBrandBox().getText().isEmpty();
@@ -442,11 +450,13 @@ public class RoutineTracker extends JFrame implements ActionListener {
         return noName || noBrand || noPrice || noCategory() || noUsage();
     }
 
+    // EFFECTS: returns true is no usage frequency was selected
     private boolean noUsage() {
         return !(addProductForm.getDailyBtn().isSelected())
                 && !(addProductForm.getWeeklyBtn().isSelected());
     }
 
+    // EFFECTS: returns true if no category was selected
     private boolean noCategory() {
         return !(addProductForm.getCleanserBtn().isSelected())
                 && !(addProductForm.getTonerBtn().isSelected())
@@ -459,6 +469,7 @@ public class RoutineTracker extends JFrame implements ActionListener {
                 && !(addProductForm.getFaceMaskBtn().isSelected());
     }
 
+    // EFFECTS: processes action of button pressed on the main screen and executes the command
     private void mainScreenAction(ActionEvent e) {
         if (e.getSource() == mainScreen.getAddBtn()) {
             this.remove(mainScreen);
@@ -478,11 +489,15 @@ public class RoutineTracker extends JFrame implements ActionListener {
         } else if (e.getSource() == mainScreen.getRemoveBtn()) {
             this.remove(mainScreen);
             this.add(removeProductForm);
+        } else if (e.getSource() == mainScreen.getExpenseBtn()) {
+            String msg = "The total expense of your skincare routine is " + currentRoutine.totalExpenses() + "¢";
+            JOptionPane.showMessageDialog(null, msg, "Alert", JOptionPane.PLAIN_MESSAGE);
         }
     }
 
+    // MODIFIES: routineDisplay
+    // EFFECTS: updates the routine display panel based on current skincare routine
     private void updateRoutineDisplay() {
-
         if (currentRoutine.isBlank()) {
             routineDisplay.emptyRoutineToDisplay(makeJListRoutine());
         } else {
@@ -490,6 +505,7 @@ public class RoutineTracker extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: returns a JList of the current skincare routine; if empty, returns a JList with message
     public JList makeJListRoutine() {
         DefaultListModel<String> myList = new DefaultListModel<>();
 
@@ -499,8 +515,9 @@ public class RoutineTracker extends JFrame implements ActionListener {
             for (int i = 0; i < currentRoutine.getRoutine().size(); i++) {
                 SkinProduct sp = currentRoutine.getRoutine().get(i);
                 int spot = i + 1;
-                String info =  sp.getCategory() + "| Name: " + sp.getName() + " | Brand: " + sp.getBrand();
-                myList.addElement(spot + "." + info);
+                String info1 =  sp.getCategory() + "| Name: " + sp.getName() + " | Brand: " + sp.getBrand() + "| ";
+                String info2 =  "Usage: " + sp.getUsage() + "| Price: " + sp.getPrice() + "¢";
+                myList.addElement(spot + "." + info1 + info2);
             }
         }
         return new JList<>(myList);

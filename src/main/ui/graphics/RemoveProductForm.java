@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
+// Represents the form that is displayed and used to remove products from the current skincare routine
+
 public class RemoveProductForm extends AppPanel {
 
     private JPanel titleArea;
@@ -28,13 +30,13 @@ public class RemoveProductForm extends AppPanel {
     private int width;
     private int height;
 
+    // EFFECTS: creates a new RemoveProductForm with given width and height
     public RemoveProductForm(int width, int height) {
         this.height = height;
         this.width = width;
 
         this.setPreferredSize(new Dimension(width, height));
         this.setLayout(new BorderLayout());
-
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         setUpAreas();
@@ -44,22 +46,30 @@ public class RemoveProductForm extends AppPanel {
         addAreasToMainPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds sub panels to main panel
     private void addAreasToMainPanel() {
         this.add(titleArea, BorderLayout.NORTH);
         this.add(formArea, BorderLayout.CENTER);
         this.add(homeBtnArea, BorderLayout.SOUTH);
     }
 
+    // MODIFIES: titleLbl, titleArea
+    // EFFECTS: creates a new title that is added to the title sub panel
     private void makeTitleArea() {
         titleLbl = new JLabel("Removing a Skin Product from Skincare Routine");
         titleArea.add(titleLbl);
     }
 
+    // MODIFIES: homeBtn, homeBtnArea
+    // EFFECTS: creates a new home button that is added to the home button sub panel
     private void makeHomeArea() {
         homeBtn = new JButton("Return to Main Menu");
         homeBtnArea.add(homeBtn);
     }
 
+    // MODIFIES: formArea, submitBtn, nameLbl, nameBox
+    // EFFECTS: sets up the form used to remove products; sets up the buttons, labels, and text boxes
     private void makeForm() {
         formArea.setLayout(new GridLayout(2, 2));
 
@@ -77,17 +87,21 @@ public class RemoveProductForm extends AppPanel {
         formArea.add(submitBtn);
     }
 
+    // MODIFIES: nameBox
+    // EFFECTS: sets the name text field visuals
     private void setTextBoxVisuals() {
         nameBox.setFont(TEXT_FIELD_FONT);
         nameBox.setForeground(TEXT_COLOR);
         nameBox.setBackground(TEXT_FIELD_COLOR);
     }
 
+    // MODIFIES: allButtons
     private void addButtonsToList() {
         allButtons.add(homeBtn);
         allButtons.add(submitBtn);
     }
 
+    // MODIFIES: titleArea, homeBtnArea, formArea
     private void setUpAreas() {
         titleArea = new JPanel();
         homeBtnArea = new JPanel();

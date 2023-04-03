@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 // Represents the form that is displayed and used to add a new skincare product to the routine
+
 public class AddProductForm extends AppPanel {
 
     private JPanel titleArea;
@@ -57,8 +58,6 @@ public class AddProductForm extends AppPanel {
     private static final Color TEXT_FIELD_COLOR = new Color(151, 255, 255);
     private static final Font TEXT_FIELD_FONT = new Font("Consolas", Font.PLAIN, 35);
 
-
-    // MODIFIES: this, titleArea, homeBtnArea, formArea
     // EFFECTS: makes a new AddProductForm with all the form components and sections set up
     public AddProductForm(int width, int height) {
         this.height = height;

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 // Represents the panel that displays the current skincare routine (when 'View Routine' is pressed)
+
 public class RoutineDisplay extends AppPanel {
 
     private JPanel titlePanel;
@@ -17,6 +18,7 @@ public class RoutineDisplay extends AppPanel {
 
     private ArrayList<JButton> allButtons;
 
+    // EFFECTS: creates a new RoutineDisplay with given width and length, and sets up all components
     public RoutineDisplay(int width, int length) {
         this.setLayout(new BorderLayout());
         setUpPanels(width, length);
@@ -32,12 +34,14 @@ public class RoutineDisplay extends AppPanel {
         addPanels();
     }
 
+    // MODIFIES: homeBtn, titleLbl, emptyLbl
     private void setUpComponents() {
         homeBtn = new JButton("Return to Main Screen");
         titleLbl = new JLabel("Your Skincare Routine");
         emptyLbl = new JLabel("No products have been added.");
     }
 
+    // MODIFIES: displayPanel, titlePanel, homeBtnPanel
     private void setUpPanels(int width, int length) {
         displayPanel = new JPanel();
         titlePanel = new JPanel();
@@ -48,6 +52,7 @@ public class RoutineDisplay extends AppPanel {
         homeBtnPanel.setPreferredSize(new Dimension(width, length / 8));
     }
 
+    // MODIFIES: this
     private void addPanels() {
         this.add(displayPanel, BorderLayout.CENTER);
         this.add(titlePanel, BorderLayout.NORTH);

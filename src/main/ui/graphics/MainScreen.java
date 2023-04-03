@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 // Represents the main screen that is shown when app first starts
+
 public class MainScreen extends AppPanel {
 
     private JPanel welcomeScreen;
@@ -27,13 +28,13 @@ public class MainScreen extends AppPanel {
 
     private ArrayList<JButton> menuButtons;
 
+    // EFFECTS: creates a new MainScreen with given height and width, and creates other components to be added
     public MainScreen(int screenWidth, int screenHeight, int buttonWidth, int buttonHeight) {
         this.buttonWidth = buttonWidth;
         this.buttonHeight = buttonHeight;
 
         controlPanel = new JPanel();
         welcomeScreen = new JPanel();
-
         controlPanel.setPreferredSize(new Dimension(screenWidth, screenHeight / 2));
         controlPanel.setLayout(new GridLayout(2, 4));
         welcomeScreen.setPreferredSize(new Dimension(screenWidth, screenHeight / 2));
@@ -42,22 +43,24 @@ public class MainScreen extends AppPanel {
         menuButtons = new ArrayList<>();
         addButtonsToList();
         addButtonsToControlPanel();
-
         setUpWelcomeScreenComponents();
         addWelcomeScreenComponents();
 
         this.setLayout(new BorderLayout());
         this.add(welcomeScreen, BorderLayout.NORTH);
         this.add(controlPanel, BorderLayout.SOUTH);
-
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setVisible(true);
     }
 
+    // MODIFIES: welcomeScreen
+    // EFFECTS: adds new components to the welcomeScreen
     private void addWelcomeScreenComponents() {
         welcomeScreen.add(welcomeLbl);
     }
 
+    // MODIFIES: welcomeScreen
+    // EFFECTS: creates new components for the welcomeScreen
     private void setUpWelcomeScreenComponents() {
         soapBottle = new ImageIcon(this.getClass().getResource("/icons/bottle_icon.png"));
         Image image = soapBottle.getImage();
@@ -68,13 +71,13 @@ public class MainScreen extends AppPanel {
         welcomeLbl.setIcon(soapBottle);
     }
 
+    // MODIFIES: menuButtons
+    // EFFECTS: adds all menu buttons to menuButtons
     private void addButtonsToList() {
-
         menuButtons.add(viewBtn);
         menuButtons.add(addBtn);
         menuButtons.add(searchBtn);
         menuButtons.add(removeBtn);
-
         menuButtons.add(expenseBtn);
         menuButtons.add(loadBtn);
         menuButtons.add(saveBtn);
@@ -86,6 +89,8 @@ public class MainScreen extends AppPanel {
         return menuButtons;
     }
 
+    // MODIFIES: controlPanel
+    // EFFECTS: adds all menu buttons to control panel
     private void addButtonsToControlPanel() {
         controlPanel.add(viewBtn);
         controlPanel.add(addBtn);
