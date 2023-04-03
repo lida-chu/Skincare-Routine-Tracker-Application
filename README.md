@@ -54,11 +54,13 @@ easier and fun for **everyone**.
 
 ### Instructions for Grader (GUI)
 
-- You can generate the first required action related to adding Xs to a Y by...
-- You can generate the second required action related to adding Xs to a Y by...
-- You can locate my visual component by...
-- You can save the state of my application by...
-- You can reload the state of my application by...
+- You can generate the first required action related to adding Xs to a Y by pressing the **add product
+to routine** button on the main screen.
+- You can generate the second required action related to adding Xs to a Y (viewing the routine) by
+pressing the **view current skincare routine** button on the main screen.
+- You can locate my visual component on the main screen, next to the title.
+- You can save the state of my application by pressing the **save** button on the main screen.
+- You can reload the state of my application by pressing the **load** button on the main screen.
 
 > 
 > ### References ##
