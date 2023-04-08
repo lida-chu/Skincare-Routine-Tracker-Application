@@ -14,20 +14,25 @@ public class Routine implements Writable {
     private List<SkinProduct> routine;
     private boolean outOfBudget;
     private boolean validRoutine;
+    private EventLog el;
 
-    // EFFECTS: Create new blank skincare routine with outOfBudget and validRoutine set to false
+    // EFFECTS: Create new blank skincare routine with outOfBudget and validRoutine set to false, and starts
+    //          an event log
     public Routine() {
         this.routine = new LinkedList<>();
         this.outOfBudget = false;
         this.validRoutine = false;
+        this.el = EventLog.getInstance();
     }
 
-    // EFFECTS: Create new blank skincare routine with given name and outOfBudget and validRoutine set to false
+    // EFFECTS: Create new blank skincare routine with given name and outOfBudget and validRoutine set to false,
+    //          and starts an event log
     public Routine(String title) {
         this.name = title;
         this.routine = new LinkedList<>();
         this.outOfBudget = false;
         this.validRoutine = false;
+        this.el = EventLog.getInstance();
     }
 
     public String getName() {
@@ -57,12 +62,14 @@ public class Routine implements Writable {
     // MODIFIES: this
     public void addToRoutine(SkinProduct product) {
         this.routine.add(product);
+        el.logEvent(new Event("Added product to routine."));
     }
 
     // REQUIRES: Product must already exist in the collection
     // MODIFIES: this
     public void removeFromRoutine(SkinProduct product) {
         this.routine.remove(product);
+        el.logEvent(new Event("Removed product from routine."));
     }
 
     // EFFECTS: returns outOfBudget value
@@ -76,6 +83,7 @@ public class Routine implements Writable {
         for (SkinProduct s: this.routine) {
             total += s.getPrice();
         }
+        el.logEvent(new Event("Displayed total expenses."));
         return total;
     }
 
@@ -144,6 +152,16 @@ public class Routine implements Writable {
         }
 
         return jsonArray;
+    }
+
+    // EFFECTS: Logs new event for when the routine is saved to file.
+    public void logSavedEvent() {
+        el.logEvent(new Event("Saved current routine."));
+    }
+
+    // EFFECTS: Logs new event for when the previous routine is loaded from file.
+    public void logLoadedEvent() {
+        el.logEvent(new Event("Loaded previous routine."));
     }
 
 

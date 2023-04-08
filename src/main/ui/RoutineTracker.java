@@ -1,8 +1,6 @@
 package ui;
 
-import model.ProductCluster;
-import model.Routine;
-import model.SkinProduct;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.graphics.*;
@@ -10,14 +8,17 @@ import ui.graphics.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 // Represents the Skincare Routine Tracker Application
 
-public class RoutineTracker extends JFrame implements ActionListener {
+public class RoutineTracker extends JFrame implements ActionListener, WindowListener {
     Scanner input = new Scanner(System.in);
     private static final String STORE_AT_FILE_PATH = "./data/mainCurrentRoutine.json";
     private JsonReader reader;
@@ -43,6 +44,7 @@ public class RoutineTracker extends JFrame implements ActionListener {
     //          main screen is visible when created
     public RoutineTracker() {
         setUpRoutines();
+        addWindowListener(this);
 
         this.setTitle("Skincare Routine Tracker");
         this.setSize(APP_WIDTH, APP_LENGTH);
@@ -308,9 +310,10 @@ public class RoutineTracker extends JFrame implements ActionListener {
             writer.write(currentRoutine);
             writer.closeWriter();
 
-            System.out.println("Saved current skincare routine!");
+            currentRoutine.logSavedEvent();
+            //System.out.println("Saved current skincare routine!");
         } catch (FileNotFoundException e) {
-            System.out.println("File not found. Skincare routine could not be saved.");
+            //System.out.println("File not found. Skincare routine could not be saved.");
         }
     }
 
@@ -319,9 +322,11 @@ public class RoutineTracker extends JFrame implements ActionListener {
     public void loadFromFile() {
         try {
             currentRoutine = reader.read();
-            System.out.println("Successfully loaded previous skincare routine!");
+
+            currentRoutine.logLoadedEvent();
+            //System.out.println("Successfully loaded previous skincare routine!");
         } catch (IOException e) {
-            System.out.println("Previous skincare routine could not be loaded.");
+            //System.out.println("Previous skincare routine could not be loaded.");
         }
     }
 
@@ -523,4 +528,37 @@ public class RoutineTracker extends JFrame implements ActionListener {
         return new JList<>(myList);
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    // EFFECTS: Prints out log once the program quits
+    @Override
+    public void windowClosing(WindowEvent e) {
+        for (Event event: EventLog.getInstance()) {
+            String date = event.getDate().toString();
+            System.out.println(date + "\n" + event.getDescription() + "\n");
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("window closed :)");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
 }
