@@ -62,10 +62,46 @@ pressing the **view current skincare routine** button on the main screen.
 - You can save the state of my application by pressing the **save** button on the main screen.
 - You can reload the state of my application by pressing the **load** button on the main screen.
 
+
+>### Phase 4: Task 2
+> *Sample of the events that occur when program runs:*
 > 
-> ### References ##
+> Sat Apr 08 16:56:46 PDT 2023\
+Added product to routine.\
+> Sat Apr 08 16:56:46 PDT 2023\
+Added product to routine.\
+> Sat Apr 08 16:56:46 PDT 2023\
+Loaded previous routine.\
+> Sat Apr 08 16:57:01 PDT 2023\
+Removed product from routine.\
+> Sat Apr 08 16:57:15 PDT 2023\
+Added product to routine.\
+> Sat Apr 08 16:57:34 PDT 2023\
+Saved current routine.\
+> Sat Apr 08 16:57:45 PDT 2023\
+Removed product from routine.\
+> Sat Apr 08 16:57:56 PDT 2023\
+Displayed total expenses.\
+> Sat Apr 08 16:58:09 PDT 2023\
+Saved current routine.\
+> Sat Apr 08 16:58:29 PDT 2023\
+Removed product from routine.\
+> Sat Apr 08 16:58:34 PDT 2023\
+Added product to routine.\
+> Sat Apr 08 16:58:34 PDT 2023\
+Loaded previous routine.\
+> Sat Apr 08 16:58:41 PDT 2023\
+Removed product from routine.
+
+
+
+> 
+> ### References 
 > Code used for data persistence (i.e. the persistence package and toJson methods in model package) was primarily 
 > designed after the [JsonSerializationDemo](https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo)
+> repository.
+> 
+> Event and EventLog classes are from the [AlarmSystem](https://github.students.cs.ubc.ca/CPSC210/AlarmSystem)
 > repository.
 
 

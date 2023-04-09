@@ -536,8 +536,7 @@ public class RoutineTracker extends JFrame implements ActionListener, WindowList
     @Override
     public void windowClosing(WindowEvent e) {
         for (Event event: EventLog.getInstance()) {
-            String date = event.getDate().toString();
-            System.out.println(date + "\n" + event.getDescription() + "\n");
+            System.out.println(event.toString());
         }
     }
 

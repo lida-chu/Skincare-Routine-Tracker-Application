@@ -1,19 +1,10 @@
 {
-    "Products": [
-        {
-            "Brand": "brand",
-            "Category": "Exfoliator",
-            "Usage Frequency": "Daily",
-            "Price": 1111,
-            "Name": "Name C"
-        },
-        {
-            "Brand": "brand",
-            "Category": "Exfoliator",
-            "Usage Frequency": "Weekly",
-            "Price": 11,
-            "Name": "Name D"
-        }
-    ],
+    "Products": [{
+        "Brand": "brand",
+        "Category": "Exfoliator",
+        "Usage Frequency": "Weekly",
+        "Price": 11,
+        "Name": "Name D"
+    }],
     "Name": "Current Routine"
 }
