@@ -94,8 +94,26 @@ Loaded previous routine.\
 Removed product from routine.
 
 >### Phase 4: Task 3
+> To start, the RoutineTracker has a single instance of RemoveProductForm, 
+> AddProductForm, MainScreen, and RoutineDisplay, as shown by the four association
+> arrows. The class itself contains many methods that handle setting up the GUI,
+> the actions for the buttons, and other GUI-related or visual aspects. However,
+> the class’ main purpose is to handle operations on the skincare routine and 
+> products. To refactor this, I would create an abstract class called AppGUI 
+> or something similar, which has a single instance of each of the aforementioned 
+> types, and have RoutineTracker implement the interface. In the class, I would 
+> also add the default behavior which handles adding action listeners to all the
+> buttons in the instances created. Then I would have the RoutineTracker extend 
+> the class, allowing it to use the default behavior and reduce the code necessary
+> for handling general app-related operations. This would improve cohesion, as the
+> methods in RoutineTracker would all be more focused on dealing with the skincare
+> routine in specific, and reduce coupling, as the RoutineTracker would have a single
+> inheritance arrow to the abstract class, rather than four association arrows. 
 > 
->
+> Next, I would remove the abstract class, AppPanel. The four classes extending 
+AppPanel currently do not behave similarly enough for a super class to be fitting
+or of use. As such, AppPanel is not necessary and removing it will decrease the 
+amount of non-essential code.
 
 > 
 > ### References 
