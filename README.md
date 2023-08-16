@@ -52,19 +52,8 @@ easier and fun for **everyone**.
 > my current skincare routine into the application.
 >
 
-### Instructions for Grader (GUI)
 
-- You can generate the first required action related to adding Xs to a Y by pressing the **add product
-to routine** button on the main screen.
-- You can generate the second required action related to adding Xs to a Y (viewing the routine) by
-pressing the **view current skincare routine** button on the main screen.
-- You can locate my visual component on the main screen, next to the title.
-- You can save the state of my application by pressing the **save** button on the main screen.
-- You can reload the state of my application by pressing the **load** button on the main screen.
-
-
->### Phase 4: Task 2
-> *Sample of the events that occur when program runs:*
+>#### Sample of events that occur when program runs:
 > 
 > Sat Apr 08 16:56:46 PDT 2023\
 Added product to routine.\
@@ -93,7 +82,7 @@ Loaded previous routine.\
 > Sat Apr 08 16:58:41 PDT 2023\
 Removed product from routine.
 
->### Phase 4: Task 3
+>#### Potential Changes for future:
 > To start, the RoutineTracker has a single instance of RemoveProductForm, 
 > AddProductForm, MainScreen, and RoutineDisplay, as shown by the four association
 > arrows. The class itself contains many methods that handle setting up the GUI,
